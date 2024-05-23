@@ -1,0 +1,72 @@
+﻿@model Pizza
+<a class="btn btn-primary m-4" href="@Url.Action("Index","Pizza")">Ritorna alla Home</a>
+<div class="my-container">
+    <div class="_card">
+        <h5 class="card-title">@Model._name</h5>
+        <p class="card-text">@Model._description</p>
+        <p class="price">Prezzo: €@Model._price</p>
+        <p>
+            <strong>Categoria:</strong>
+            @if (Model.Categories != null)
+            {
+                @Model.Categories._name
+            }
+            else
+            {
+                <span>Nessuna categoria selezionata</span>
+            }
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+            @foreach (var ingredient in Model.Ingredients)
+            {
+                <div>
+                    @ingredient._name
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+    <style>
+    .my-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    ._card {
+        
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .card-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    card-text {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .price {
+        font-size: 20px;
+        color: #008080;
+    }
+
+    keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+           opacity: 1;
+           transform: translateY(0);
+        }
+    }
+    </style>

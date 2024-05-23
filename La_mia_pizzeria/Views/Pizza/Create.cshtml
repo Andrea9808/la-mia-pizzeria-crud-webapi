@@ -1,0 +1,161 @@
+﻿@model PizzaFormModel
+
+<h1>Inserisci una pizza</h1>
+<div class="body">
+    <div class="my-container-form">
+        <form asp-controller="Pizza" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <input asp-for="Pizza._name" class="d-block w-100 form__input" placeholder="Nome" />
+                <label for="_name" class="form__label">Nome</label>
+                <span asp-validation-for="Pizza._name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Pizza._description" class="d-block w-100 form__input" placeholder="Descrizione" />
+                <label for="_description" class="form__label">Descrizione</label>
+                <span asp-validation-for="Pizza._description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Pizza._img" class="d-block w-100 form__input" placeholder="Immagine" />
+                <label for="_img" class="form__label">Immagine</label>
+                <span asp-validation-for="Pizza._img" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="number" asp-for="Pizza._price" class="d-block w-100 form__input" placeholder="Prezzo" />
+                <label for="_price" class="form__label">Prezzo</label>
+                <span asp-validation-for="Pizza._price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <strong>Categoria:</strong>
+                <select asp-for="Pizza.CategoryId" class="d-block w-100">
+                    <option value="">Seleziona una categoria: </option>
+                    @foreach (Category category in Model.Categories)
+                    {
+                        @if (Model.Pizza.CategoryId == category.CategoryId)
+                        {
+                            <option value="@category.CategoryId" selected>@category._name</option>
+                        }
+                        else
+                        {
+                            <option value="@category.CategoryId">@category._name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <strong>Seleziona gli ingredienti:</strong>
+                @for (int i = 0; i < Model.Ingredients.Count; i++)
+                {
+                    <div>
+                        <input type="checkbox" name="SelectedIngredients" value="@Model.Ingredients[i].Value"
+                        @(Model.SelectedIngredients.Contains(Model.Ingredients[i].Value) ? "checked" : "") />
+                        @Model.Ingredients[i].Text
+                    </div>
+                }
+            </div>
+
+            <div class="text-end">
+                <input type="submit" class="btn btn-small btn-info" value="Salva">
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+
+.body {
+    background-color: white;
+    color: black;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+code {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    background-color: #f0f0f0;
+}
+
+.my-container-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 2rem 1.5rem;
+    background-color: #f0f0f0;
+}
+
+media (min-width: 768px) {
+    .my-container-form {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .cta-form {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+}
+.form {
+    align-self: center;
+}
+
+.form__input {
+    width: clamp(120px, 50vw, 420px);
+    height: 2.5rem;
+    padding: 0 1.25rem;
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 0.625rem auto;
+    transition: all 250ms;
+}
+
+.form__input:focus {
+    outline: none;
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.form__input:focus+.form__label,
+.form__input:not(:placeholder-shown)+.form__label {
+    transform: translateY(-4.50rem) scale(1);
+    color: black;
+}
+
+.form__input::placeholder {
+    display: none;
+    color: transparent;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.form__input:not(:placeholder-shown) {
+    border-top-color: rgba(0, 0, 0, 0.5);
+}
+
+.form__label {
+    font-size: 1rem;
+    color: grey;
+    display: block;
+    transform: translate(1.25rem, -2.5rem);
+    transform-origin: 0 0;
+    transition: all 500ms;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+</style>

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Reg/Log";
+}
+
+
+<div class="container">
+    <div class="container-reg-log">
+        <h1>Registrati o accedi per visualizzare tutti i nostri prodotti</h1>
+        
+        <div class="d-flex">
+            <a id="register" asp-area="Identity" asp-page="/Account/Register">
+                Registrati
+            </a>
+
+            <a class="mx-4" id="login" asp-area="Identity" asp-page="/Account/Login">
+                Accedi
+            </a>
+        </div>
+      
+    </div>
+</div>
+
+<style>
+    .container-reg-log {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+    }
+
+    .container-reg-log h1 {
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+        .container-reg-log a {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+        .container-reg-log a:hover {
+        background-color: #0056b3;
+     }
+</style>
