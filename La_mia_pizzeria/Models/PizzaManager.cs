@@ -11,9 +11,21 @@ namespace La_mia_pizzeria.Models
         {
             using (PizzaContext db = new PizzaContext())
             {
-                return db.Pizzas.ToList();
-            }
+                return GetPizzaByName("");
+                //return db.Pizzas.Include(p => p.Ingredients).Include(p => p.Categories).ToList();
+            }   
         }
+
+        public static List<Pizza> GetPizzaByName(string name)
+        {
+            using PizzaContext db = new PizzaContext();
+            return db.Pizzas
+                .Include(pizza => pizza.Ingredients)
+                .Include(pizza => pizza.Categories)
+                .Where(p => p._name.ToLower().Contains(name.ToLower()))
+                .ToList();
+        }
+
         public static List<Pizza> GetPizzas()
         {
             List<Pizza> pizze = new List<Pizza>

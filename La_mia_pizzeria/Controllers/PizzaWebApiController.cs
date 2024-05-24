@@ -10,21 +10,20 @@ namespace La_mia_pizzeria.Controllers
     [ApiController]
     public class PizzaWebApiController : ControllerBase
     {
-        //Pizza by Name ....../api/PizzaWebApi/GetPizzasByName?filter=margherita
+
+
+
+        //Pizza by Name ....../api/PizzaWebApi/GetAllPizzas
         [HttpGet]
-        public IActionResult GetPizzasByName(string filter = null)
+        public IActionResult GetAllPizzas(string? name)
         {
-            using (PizzaContext db = new PizzaContext())
-            {
-                var pizzas = db.Pizzas.Where(p => p._name.ToLower().Contains(filter.ToLower())).ToList();
+           if(name == null)
+           {
+               return Ok(PizzaManager.GetPizzasFromDatabase());
+           }
+           List<Pizza> mie = PizzaManager.GetPizzaByName(name);
+           return Ok(PizzaManager.GetPizzaByName(name));
 
-                if (pizzas == null)
-                {
-                    return NotFound("Errore");
-                }
-
-                return Ok(pizzas);
-            }
         }
 
         //Pizza by Id ....../api/PizzaWebApi/GetPizzaById?id=4
@@ -81,5 +80,6 @@ namespace La_mia_pizzeria.Controllers
                 
             return NotFound("Error");
         }
+
     }
 }

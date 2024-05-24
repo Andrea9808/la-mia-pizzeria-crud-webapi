@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using La_mia_pizzeria.Models;
+using System.Text.Json.Serialization;
 namespace La_mia_pizzeria
 {
     public class Program
@@ -15,8 +16,10 @@ namespace La_mia_pizzeria
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<PizzaContext>();
 
+            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
 
             var app = builder.Build();
 
@@ -39,7 +42,7 @@ namespace La_mia_pizzeria
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Pizza}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapRazorPages();
 

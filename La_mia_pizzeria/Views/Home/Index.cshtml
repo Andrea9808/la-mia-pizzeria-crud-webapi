@@ -1,1 +1,92 @@
-﻿
+﻿<div class="container-fluid">
+    <div class="container">
+        <input class="js_search" placeholder="Cerca per titolo" />
+        <div class="row">
+            <div class="pizza d-none">           
+                 <div class="row pizza-list">
+                        
+                 </div>
+            </div>
+        </div>
+        <div class="row no_pizza d-none">
+            <div class="col-12">
+                <h3>Non hai inserito alcuna pizza</h3>
+            </div>
+        </div>
+        
+         <div class="col">
+             <a href="@Url.Action("Create", "Home")" class="btn btn-success">Crea Pizza</a>
+         </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    //prendere tutte le pizze
+    var ciao = "ciao";
+    console.log(ciao);
+
+    function GetAllPizza(nameFilter) {
+        axios.get('api/PizzaWebApi/GetAllPizzas',
+            {
+                params: { name: nameFilter }
+            })
+            .then((res) => {
+                console.log(res);
+                if (res.data.length == 0) {
+                    document.querySelector('.no_pizza').classList.remove('d-none');
+                    document.querySelector('.pizza').classList.add('d-none');
+                }
+                else {
+                    document.querySelector('.no_pizza').classList.add('d-none');
+                    var pizzaTable = document.querySelector('.pizza');
+                    pizzaTable.classList.remove('d-none');
+
+                    var pizzaList = document.querySelector('.pizza-list');
+                    pizzaList.innerHTML = '';
+                    res.data.forEach((pizza) => {
+                        console.log(pizza);
+                        pizzaList.innerHTML +=
+
+                            `<div class="col-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <img src="${pizza._img}" alt="${pizza._name}" class="card-img-top" />
+                                        <h5 class="card-title text-center">${pizza._name}</h5>
+                                        <p class="card-text">${pizza._description}</p>
+                                        <p class="card-text">${pizza._price}€</p>
+                                        <p class="card-text">${pizza.categories._name}€</p>
+                                     </div>
+                                 <div class="btn btn-danger" onclick="deleteById(${pizza.id})">Elimina</div>
+                                </div>
+                            </div>`;
+                    })
+
+
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    GetAllPizza();
+
+    function deleteById(id) {
+        axios.delete('api/PizzaWebApi/DeletePizza/' + id)
+            .then((res) => {
+                console.log(res);
+                GetAllPizza();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    function search() {
+        GetAllPizza(this.value) 
+    }
+
+    document.querySelector('.js_search').addEventListener('keyup', search);
+</script>

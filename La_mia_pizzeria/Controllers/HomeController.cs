@@ -18,7 +18,7 @@ namespace La_mia_pizzeria.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Create()
         {
             return View();
         }
@@ -28,5 +28,6 @@ namespace La_mia_pizzeria.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
